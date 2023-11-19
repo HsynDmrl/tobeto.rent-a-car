@@ -8,6 +8,11 @@ Projenin veritabanı tasarımını gösteren ER (Entity-Relationship) diagramı 
 
 ![ER Diagram](https://github.com/HsynDmrl/tobeto.rent-a-car/blob/main/18.11.2023ER-diagram.png)
 
+## SQL Dosyası
+
+Veritabanı işlemleri için kullanılan SQL dosyasına [buradan](./18.11.2023SQL.pgerd) erişebilirsiniz.
+
+Projeyle ilgili daha fazla detay ve sorgu için SQL dosyasını inceleyebilirsiniz.
 Diagramda görüldüğü gibi, veritabanındaki farklı entity'ler arasında ilişkiler kurulmuş ve verilerin nasıl organize edildiği gösterilmiştir.
 
 ## Kurulum
