@@ -25,7 +25,7 @@ Projede kullanılan ilişkileri daha iyi anlamak için [db_iliskiler.pdf](https:
 
 - Yeni Controller'lar Eklendi: Projeye yeni özellikler eklemek amacıyla `controllers` dizinine yeni controller'lar eklendi. Bu controller'lar, projenin farklı modüllerini yönetmek için kullanılmaktadır.
 
-- Yeni Entity ve Repository'ler Eklendi: Veritabanı işlemlerini daha etkili yönetmek için yeni entity ve repository sınıfları oluşturuldu. Bu sayede veritabanı operasyonları daha modüler hale getirildi.
+- Yeni Entity ve Repository'ler Eklendi: Veritabanı işlemlerini daha etkili yönetmek için yeni `entities` ve `repositories` sınıfları oluşturuldu. Bu sayede veritabanı operasyonları daha modüler hale getirildi.
 
 - Güncellenmiş ER Diagramı: Veritabanı ilişkilerini yansıtan ER diagramı güncellendi. Yeni entity'ler ve ilişkiler diagramda yer almaktadır.
 
