@@ -1,15 +1,22 @@
 package com.rentacar.rentaacar.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "vehicles")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Vehicle {
 
     @Id
-    @Column(name="id", unique = true)
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -45,14 +52,19 @@ public class Vehicle {
 
     @ManyToOne
     @JoinColumn(name="insurance_id")
+    @JsonIgnore
     private Insurance insurance;
 
     @ManyToOne
     @JoinColumn(name="maintenance_id")
+    @JsonIgnore
     private Maintenance maintenance;
 
     @OneToMany(mappedBy = "vehicle")
+    @JsonIgnore
     private List<Maintenance> maintenances;
+
     @OneToMany(mappedBy = "vehicle")
+    @JsonIgnore
     private List<Insurance> insurances;
 }

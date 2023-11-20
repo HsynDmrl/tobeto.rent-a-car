@@ -1,17 +1,23 @@
 package com.rentacar.rentaacar.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="employees")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
 
     @Id
-    @Column(name="id", unique = true)
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -36,6 +42,9 @@ public class Employee {
     @Column(name="address")
     private String address;
 
+    @Column(name="city")
+    private String city;
+
     @Column(name="salary", columnDefinition = "double precision")
     private double salary;
 
@@ -43,5 +52,6 @@ public class Employee {
     private String tcNo;
 
     @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private List<Order> orders;
 }

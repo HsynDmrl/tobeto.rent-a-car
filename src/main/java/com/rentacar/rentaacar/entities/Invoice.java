@@ -1,25 +1,34 @@
 package com.rentacar.rentaacar.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name="invoices")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Invoice {
 
     @Id
-    @Column(name="id", unique = true)
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
     @JoinColumn(name="order_id")
+    @JsonIgnore
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name="costumer_id")
-    private Costumer costumer;
+    @JoinColumn(name="customer_id")
+    @JsonIgnore
+    private Customer customer;
 
     @Column(name="invoice_date", columnDefinition = "date")
     private LocalDate invoiceDate;

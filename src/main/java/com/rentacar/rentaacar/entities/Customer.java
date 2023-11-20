@@ -1,15 +1,22 @@
 package com.rentacar.rentaacar.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
-@Table(name="costumers")
-public class Costumer {
+@Table(name="customers")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Customer {
 
     @Id
-    @Column(name="id", unique = true)
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -37,8 +44,11 @@ public class Costumer {
     @Column(name="tc_no", unique = true)
     private String tcNo;
 
-    @OneToMany(mappedBy = "costumer")
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<Order> orders;
-    @OneToMany(mappedBy = "costumer")
+
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<Invoice> invoices;
 }

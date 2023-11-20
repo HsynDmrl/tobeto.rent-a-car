@@ -1,22 +1,30 @@
 package com.rentacar.rentaacar.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name="orders")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
 
     @Id
-    @Column(name="id", unique = true)
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name="costumer_id")
-    private Costumer costumer;
+    @JoinColumn(name="customer_id")
+    @JsonIgnore
+    private Customer customer;
 
     @Column(name="pick_up_date", columnDefinition = "date")
     private LocalDate pickUpDate;
@@ -26,6 +34,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name="vehicle_id")
+    @JsonIgnore
     private Vehicle vehicle;
 
     @Column(name="delivered")
@@ -39,10 +48,14 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name="employee_id")
+    @JsonIgnore
     private Employee employee;
 
     @OneToMany(mappedBy = "order")
+    @JsonIgnore
     private List<Payment> payments;
+
     @OneToMany(mappedBy = "order")
+    @JsonIgnore
     private List<Invoice> invoices;
 }
