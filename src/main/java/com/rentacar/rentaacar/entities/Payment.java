@@ -23,7 +23,6 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    @JsonIgnore
     private Order order;
 
     @Column(name = "payment_date", columnDefinition = "date")

@@ -1,0 +1,23 @@
+package com.rentacar.rentaacar.dtos.requests.Vehicle;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class AddVehicleRequest {
+    private String brand;
+    private String model;
+    private int year;
+    private String color;
+    private double dailyCost;
+    private String status;
+    private String plateNumber;
+    private int odometer;
+    private String fuelType;
+    private String notes;
+    private int insoranceId;
+    private int maintenanceId;
+}

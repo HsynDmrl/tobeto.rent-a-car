@@ -23,7 +23,6 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name="customer_id")
-    @JsonIgnore
     private Customer customer;
 
     @Column(name="pick_up_date", columnDefinition = "date")
@@ -34,7 +33,6 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name="vehicle_id")
-    @JsonIgnore
     private Vehicle vehicle;
 
     @Column(name="delivered")
@@ -48,7 +46,6 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name="employee_id")
-    @JsonIgnore
     private Employee employee;
 
     @OneToMany(mappedBy = "order")

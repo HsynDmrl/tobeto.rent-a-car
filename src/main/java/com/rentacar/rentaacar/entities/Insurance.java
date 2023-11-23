@@ -23,7 +23,6 @@ public class Insurance {
 
     @ManyToOne
     @JoinColumn(name="vehicle_id")
-    @JsonIgnore
     private Vehicle vehicle;
 
     @Column(name="insurance_company")

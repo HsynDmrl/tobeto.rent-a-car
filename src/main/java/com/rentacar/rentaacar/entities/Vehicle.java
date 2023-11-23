@@ -52,12 +52,10 @@ public class Vehicle {
 
     @ManyToOne
     @JoinColumn(name="insurance_id")
-    @JsonIgnore
     private Insurance insurance;
 
     @ManyToOne
     @JoinColumn(name="maintenance_id")
-    @JsonIgnore
     private Maintenance maintenance;
 
     @OneToMany(mappedBy = "vehicle")

@@ -22,12 +22,10 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name="order_id")
-    @JsonIgnore
     private Order order;
 
     @ManyToOne
     @JoinColumn(name="customer_id")
-    @JsonIgnore
     private Customer customer;
 
     @Column(name="invoice_date", columnDefinition = "date")

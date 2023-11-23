@@ -23,7 +23,6 @@ public class Maintenance {
 
     @ManyToOne
     @JoinColumn(name="vehicle_id")
-    @JsonIgnore
     private Vehicle vehicle;
 
     @Column(name="maintenance_date", columnDefinition = "date")
