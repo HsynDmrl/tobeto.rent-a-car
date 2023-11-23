@@ -25,7 +25,7 @@ Projede kullanılan ilişkileri daha iyi anlamak için [db_iliskiler.pdf](https:
 
 - **Controller'lar Güncellendi:** Tüm controller'lar, projeye yeni özellikler eklemek amacıyla güncellendi. Yapılan değişiklikler, projenin daha esnek ve genişletilebilir olmasını sağlamaktadır.
 
-- **Yeni DTO'lar Eklendi:** Projeye, talep (requests) ve cevap (responses) verilerini işlemek üzere iki ayrı DTO (Data Transfer Object) eklendi. Bu DTO'lar, veri transferini düzenlemek ve kontrol etmek için kullanılmaktadır.
+- **Yeni DTO'lar Eklendi:** Projeye, `talep (requests)` ve `cevap (responses)` verilerini işlemek üzere iki ayrı DTO (Data Transfer Object) eklendi. Bu DTO'lar, veri transferini düzenlemek ve kontrol etmek için kullanılmaktadır.
 
 - **DTO'lar Entitilerle Bağlandı:** Yeni eklenen DTO'lar, controller'lar aracılığıyla entitilere bağlandı. Bu sayede veri işlemleri daha spesifik ve verimli bir şekilde gerçekleştirilebilmektedir.
 
