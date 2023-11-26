@@ -51,4 +51,11 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Invoice> invoices;
+
+    @Transient
+    private String deleteConfirmation;
+
+    public boolean isDeleteConfirmed() {
+        return "evet".equalsIgnoreCase(deleteConfirmation);
+    }
 }

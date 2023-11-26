@@ -54,4 +54,11 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
     private List<Order> orders;
+
+    @Transient
+    private String deleteConfirmation;
+
+    public boolean isDeleteConfirmed() {
+        return "evet".equalsIgnoreCase(deleteConfirmation);
+    }
 }

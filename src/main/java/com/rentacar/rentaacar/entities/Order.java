@@ -55,4 +55,11 @@ public class Order {
     @OneToMany(mappedBy = "order")
     @JsonIgnore
     private List<Invoice> invoices;
+
+    @Transient
+    private String deleteConfirmation;
+
+    public boolean isDeleteConfirmed() {
+        return "evet".equalsIgnoreCase(deleteConfirmation);
+    }
 }

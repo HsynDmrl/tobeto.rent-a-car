@@ -42,4 +42,11 @@ public class Payment {
 
     @Column(name = "status")
     private int status;
+
+    @Transient
+    private String deleteConfirmation;
+
+    public boolean isDeleteConfirmed() {
+        return "evet".equalsIgnoreCase(deleteConfirmation);
+    }
 }

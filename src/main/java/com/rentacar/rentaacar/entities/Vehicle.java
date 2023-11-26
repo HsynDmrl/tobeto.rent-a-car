@@ -65,4 +65,11 @@ public class Vehicle {
     @OneToMany(mappedBy = "vehicle")
     @JsonIgnore
     private List<Insurance> insurances;
+
+    @Transient
+    private String deleteConfirmation;
+
+    public boolean isDeleteConfirmed() {
+        return "evet".equalsIgnoreCase(deleteConfirmation);
+    }
 }
