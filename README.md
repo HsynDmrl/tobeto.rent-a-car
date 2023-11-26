@@ -19,6 +19,19 @@ Diagramda görüldüğü gibi, veritabanındaki farklı entity'ler arasında ili
 
 Projede kullanılan ilişkileri daha iyi anlamak için [db_iliskiler.pdf](https://github.com/HsynDmrl/tobeto.rent-a-car/blob/main/db_iliskiler.pdf) adlı bir eğitim dokümanı eklenmiştir. Bu doküman, one-to-many ve one-to-one ilişkilerini açıklamaktadır. İlgili bağlantıya tıklayarak PDF dosyasını görüntüleyebilir veya indirebilirsiniz.
 
+## Güncelleme - 26 Kasım 2023
+
+### Yapılan Değişiklikler
+
+- **Services Katmanı Eklendi:** Projeye yeni bir "services" katmanı eklendi. Bu katman, `abstract` ve `concrete` sınıfları içererek, iş mantığını daha iyi düzenlemek ve daha modüler bir yapı oluşturmak amacıyla tasarlandı.
+
+- **Requests ve Responses Service Katmanına Taşındı:** Daha önceki `talep (requests)` ve `cevap (responses)` verileri, bu güncelleme ile "services" katmanına taşındı. Bu sayede iş mantığı, bu katman aracılığıyla daha düzenli bir şekilde yönetilmektedir.
+
+- **Koşullar Eklendi:** Projedeki manager kısımlarına yani güncellenen,yeni eklenen ve silinecek olan bilgileri kontrol etmek için, koşullar eklendi. Örneğin:
+  ```java
+  if (updateVehicleDto.getBrand().length() < 2)
+      throw new RuntimeException("Güncellenen Marka bilgisi 2 karakterden kısa olamaz.");
+
 ## Güncelleme - 23 Kasım 2023
 
 ### Yapılan Değişiklikler
