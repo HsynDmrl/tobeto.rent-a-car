@@ -19,6 +19,17 @@ Diagramda görüldüğü gibi, veritabanındaki farklı entity'ler arasında ili
 
 Projede kullanılan ilişkileri daha iyi anlamak için [db_iliskiler.pdf](https://github.com/HsynDmrl/tobeto.rent-a-car/blob/main/db_iliskiler.pdf) adlı bir eğitim dokümanı eklenmiştir. Bu doküman, one-to-many ve one-to-one ilişkilerini açıklamaktadır. İlgili bağlantıya tıklayarak PDF dosyasını görüntüleyebilir veya indirebilirsiniz.
 
+## Güncelleme - 06 Aralık 2023
+
+### Yapılan Değişiklikler
+
+- **Veritabanına Yeni Özellikler Eklendi:** Projeye, veritabanında en az 5 entity için her birine en az 2 derived method ve en az 2 JPQL query örneği eklenmiştir. Bu örnekler aşağıdaki entity'ler için uygulanmıştır:
+  - Customer
+  - Employee
+  - Insurance
+  - Maintenance
+  - Payment
+
 ## Güncelleme - 26 Kasım 2023
 
 ### Yapılan Değişiklikler
