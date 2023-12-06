@@ -21,10 +21,6 @@ public class Insurance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name="vehicle_id")
-    private Vehicle vehicle;
-
     @Column(name="insurance_company")
     private String insuranceCompany;
 

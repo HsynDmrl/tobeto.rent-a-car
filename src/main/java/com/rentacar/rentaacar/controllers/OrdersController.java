@@ -1,6 +1,6 @@
 package com.rentacar.rentaacar.controllers;
 
-import com.rentacar.rentaacar.services.dtos.abstracts.OrderService;
+import com.rentacar.rentaacar.services.abstracts.OrderService;
 import com.rentacar.rentaacar.services.dtos.requests.Order.AddOrderRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Order.UpdateOrderRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Order.GetOrderListResponse;

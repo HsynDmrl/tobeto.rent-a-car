@@ -1,6 +1,6 @@
 package com.rentacar.rentaacar.controllers;
 
-import com.rentacar.rentaacar.services.dtos.abstracts.InvoiceService;
+import com.rentacar.rentaacar.services.abstracts.InvoiceService;
 import com.rentacar.rentaacar.services.dtos.requests.Invoice.AddInvoiceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Invoice.UpdateInvoiceRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Invoice.GetInvoiceListResponse;

@@ -1,8 +1,9 @@
 package com.rentacar.rentaacar.controllers;
 
-import com.rentacar.rentaacar.services.dtos.abstracts.PaymentService;
+import com.rentacar.rentaacar.services.abstracts.PaymentService;
 import com.rentacar.rentaacar.services.dtos.requests.Payment.AddPaymentRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Payment.UpdatePaymentRequest;
+import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Payment.GetPaymentListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Payment.GetPaymentResponse;
 import lombok.AllArgsConstructor;
@@ -35,5 +36,26 @@ public class PaymentsController {
     public void delete(@PathVariable int id, String areYouSure)
     {
         paymentService.delete(id, areYouSure);
+    }
+
+    @GetMapping("/findByAmount")
+    List<GetPaymentListResponse> findByAmount(double amount)
+    {
+        return paymentService.findByAmount(amount);
+    }
+    @GetMapping("/findByCurrency")
+    List<GetPaymentListResponse> findByCurrency(String currency)
+    {
+        return paymentService.findByCurrency(currency);
+    }
+    @GetMapping("/getPaymentsByStatus")
+    List<GetPaymentListResponse> getPaymentsByStatus(int status)
+    {
+        return paymentService.getPaymentsByStatus(status);
+    }
+    @GetMapping("getPaymentByTransactionNo")
+    List<GetPaymentListResponse> getPaymentByTransactionNo(String transactionNo)
+    {
+        return paymentService.getPaymentByTransactionNo(transactionNo);
     }
 }

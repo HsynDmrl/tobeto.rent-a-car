@@ -1,11 +1,12 @@
-package com.rentacar.rentaacar.services.dtos.concretes;
+package com.rentacar.rentaacar.services.concretes;
 
 import com.rentacar.rentaacar.entities.*;
 import com.rentacar.rentaacar.repositories.InsuranceRepository;
 import com.rentacar.rentaacar.repositories.VehicleRepository;
-import com.rentacar.rentaacar.services.dtos.abstracts.InsuranceService;
+import com.rentacar.rentaacar.services.abstracts.InsuranceService;
 import com.rentacar.rentaacar.services.dtos.requests.Insurance.AddInsuranceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Insurance.UpdateInsuranceRequest;
+import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Insurance.GetInsuranceListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Insurance.GetInsuranceResponse;
 import lombok.AllArgsConstructor;
@@ -79,10 +80,6 @@ public class InsuranceManager implements InsuranceService {
 
         Insurance addInsurance = new Insurance();
 
-        Vehicle vehicle = vehicleRepository.findById(addInsuranceDto.getVehicleId())
-                .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir Araç bulunamadı."));
-        addInsurance.setVehicle(vehicle);
-
         addInsurance.setInsuranceCompany(addInsuranceDto.getInsuranceCompany());
         addInsurance.setPolicyNumber(addInsuranceDto.getPolicyNumber());
         addInsurance.setExpirationDate(LocalDate.parse(addInsuranceDto.getExpirationDate()));
@@ -101,9 +98,6 @@ public class InsuranceManager implements InsuranceService {
         Insurance updateInsurance = insuranceRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir sigorta bulunamadı."));
 
-        Vehicle vehicle = vehicleRepository.findById(updateInsuranceDto.getVehicleId())
-                .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir Araç bulunamadı."));
-
         if (updateInsuranceDto.getInsuranceCompany().length() < 2)
             throw new RuntimeException("Güncellenen sigorta şirketi 2 karakterden kısa olamaz.");
 
@@ -119,7 +113,6 @@ public class InsuranceManager implements InsuranceService {
         if (updateInsuranceDto.getPremiumAmount() == null)
             throw new RuntimeException("Güncellenen Prim miktarı boş veya sıfır olamaz.");
 
-        updateInsurance.setVehicle(vehicle);
         updateInsurance.setInsuranceCompany(updateInsuranceDto.getInsuranceCompany());
         updateInsurance.setPolicyNumber(updateInsuranceDto.getPolicyNumber());
         updateInsurance.setExpirationDate(LocalDate.parse(updateInsuranceDto.getExpirationDate()));
@@ -142,5 +135,51 @@ public class InsuranceManager implements InsuranceService {
         } else {
             throw new RuntimeException("Silme işlemi iptal edildi. Onaylamak için areYouSure bölümüne 'evet' yazmanız gerekiyor.");
         }
+    }
+
+    @Override
+    public List<GetInsuranceListResponse> findByInsuranceCompany(String insuranceCompany) {
+
+        List<Insurance> insurances = insuranceRepository.findByInsuranceCompany(insuranceCompany);
+        List<GetInsuranceListResponse> response = new ArrayList<>();
+
+        for (Insurance insurance : insurances) {
+            response.add(new GetInsuranceListResponse(
+                    insurance.getInsuranceCompany(),
+                    insurance.getPolicyNumber(),
+                    String.valueOf(insurance.getExpirationDate()),
+                    insurance.getCoverageType(),
+                    String.valueOf(insurance.getPremiumAmount()),
+                    insurance.getStatus()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetInsuranceListResponse> findByPolicyNumberIsNot(String policyNumber) {
+
+        List<Insurance> insurances = insuranceRepository.findByInsuranceCompany(policyNumber);
+        List<GetInsuranceListResponse> response = new ArrayList<>();
+
+        for (Insurance insurance : insurances) {
+            response.add(new GetInsuranceListResponse(
+                    insurance.getInsuranceCompany(),
+                    insurance.getPolicyNumber(),
+                    String.valueOf(insurance.getExpirationDate()),
+                    insurance.getCoverageType(),
+                    String.valueOf(insurance.getPremiumAmount()),
+                    insurance.getStatus()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetInsuranceListResponse> getInsurancesByCoverageType(String coverageType) {
+        return insuranceRepository.getInsurancesByCoverageType(coverageType);
+    }
+
+    @Override
+    public List<GetInsuranceListResponse> getInsurancesWithPremiumGreaterThan(String premiumAmount) {
+        return insuranceRepository.getInsurancesWithPremiumGreaterThan(premiumAmount);
     }
 }

@@ -58,14 +58,6 @@ public class Vehicle {
     @JoinColumn(name="maintenance_id")
     private Maintenance maintenance;
 
-    @OneToMany(mappedBy = "vehicle")
-    @JsonIgnore
-    private List<Maintenance> maintenances;
-
-    @OneToMany(mappedBy = "vehicle")
-    @JsonIgnore
-    private List<Insurance> insurances;
-
     @Transient
     private String deleteConfirmation;
 

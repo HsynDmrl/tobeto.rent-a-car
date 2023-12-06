@@ -1,10 +1,10 @@
-package com.rentacar.rentaacar.services.dtos.concretes;
+package com.rentacar.rentaacar.services.concretes;
 
 import com.rentacar.rentaacar.entities.*;
 import com.rentacar.rentaacar.repositories.InsuranceRepository;
 import com.rentacar.rentaacar.repositories.MaintenanceRepository;
 import com.rentacar.rentaacar.repositories.VehicleRepository;
-import com.rentacar.rentaacar.services.dtos.abstracts.VehicleService;
+import com.rentacar.rentaacar.services.abstracts.VehicleService;
 import com.rentacar.rentaacar.services.dtos.requests.Vehicle.AddVehicleRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Vehicle.UpdateVehicleRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Vehicle.GetVehicleListResponse;

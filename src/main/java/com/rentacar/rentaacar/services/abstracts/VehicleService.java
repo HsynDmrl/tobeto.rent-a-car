@@ -1,4 +1,4 @@
-package com.rentacar.rentaacar.services.dtos.abstracts;
+package com.rentacar.rentaacar.services.abstracts;
 
 import com.rentacar.rentaacar.services.dtos.requests.Vehicle.AddVehicleRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Vehicle.UpdateVehicleRequest;

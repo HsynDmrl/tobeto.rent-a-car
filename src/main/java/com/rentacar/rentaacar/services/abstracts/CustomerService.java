@@ -1,5 +1,6 @@
-package com.rentacar.rentaacar.services.dtos.abstracts;
+package com.rentacar.rentaacar.services.abstracts;
 
+import com.rentacar.rentaacar.entities.Customer;
 import com.rentacar.rentaacar.services.dtos.requests.Customer.AddCustomerRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Customer.UpdateCustomerRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
@@ -15,4 +16,9 @@ public interface CustomerService {
     public void add(@RequestBody AddCustomerRequest addCustomerDto);
     public void update(@PathVariable int id, @RequestBody UpdateCustomerRequest updateCustomerDto);
     public void delete(@PathVariable int id, String areYouSure);
+
+    List<GetCustomerListResponse> findByName(String name);
+    List<GetCustomerListResponse> findByNameIsNot(String name);
+    List<GetCustomerListResponse> getCustomerFromCity(String city);
+    List<GetCustomerListResponse> getCustomersWithSurnameStartingWithLetter(String startLetter);
 }

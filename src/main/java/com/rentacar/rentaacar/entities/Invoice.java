@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="invoices")
@@ -19,10 +20,6 @@ public class Invoice {
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @ManyToOne
-    @JoinColumn(name="order_id")
-    private Order order;
 
     @ManyToOne
     @JoinColumn(name="customer_id")
@@ -42,6 +39,10 @@ public class Invoice {
 
     @Column(name="status")
     private String status;
+
+    @OneToMany(mappedBy = "invoice")
+    @JsonIgnore
+    private List<Order> orders;
 
     @Transient
     private String deleteConfirmation;

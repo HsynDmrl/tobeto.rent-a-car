@@ -21,10 +21,6 @@ public class Maintenance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name="vehicle_id")
-    private Vehicle vehicle;
-
     @Column(name="maintenance_date", columnDefinition = "date")
     private LocalDate maintenanceDate;
 

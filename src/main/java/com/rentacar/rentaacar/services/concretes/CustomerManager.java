@@ -1,10 +1,8 @@
-package com.rentacar.rentaacar.services.dtos.concretes;
+package com.rentacar.rentaacar.services.concretes;
 
 import com.rentacar.rentaacar.entities.Customer;
-import com.rentacar.rentaacar.entities.Employee;
-import com.rentacar.rentaacar.entities.Payment;
 import com.rentacar.rentaacar.repositories.CustomerRepository;
-import com.rentacar.rentaacar.services.dtos.abstracts.CustomerService;
+import com.rentacar.rentaacar.services.abstracts.CustomerService;
 import com.rentacar.rentaacar.services.dtos.requests.Customer.AddCustomerRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Customer.UpdateCustomerRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
@@ -148,5 +146,53 @@ public class CustomerManager implements CustomerService {
         } else {
             throw new RuntimeException("Silme işlemi iptal edildi. Onaylamak için areYouSure bölümüne 'evet' yazmanız gerekiyor.");
         }
+    }
+    @Override
+    public List<GetCustomerListResponse> findByName(String name) {
+
+        List<Customer> customers = customerRepository.findByName(name);
+        List<GetCustomerListResponse> response = new ArrayList<>();
+
+        for (Customer customer : customers) {
+            response.add(new GetCustomerListResponse(
+                    customer.getName(),
+                    customer.getSurname(),
+                    customer.getAddress(),
+                    customer.getCity(),
+                    customer.getPhone(),
+                    customer.getEmail(),
+                    customer.getLicenseNumber(),
+                    customer.getTcNo()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetCustomerListResponse> findByNameIsNot(String name) {
+        List<Customer> customers = customerRepository.findByNameIsNot(name);
+        List<GetCustomerListResponse> response = new ArrayList<>();
+
+        for (Customer customer : customers) {
+            response.add(new GetCustomerListResponse(
+                    customer.getName(),
+                    customer.getSurname(),
+                    customer.getAddress(),
+                    customer.getCity(),
+                    customer.getPhone(),
+                    customer.getEmail(),
+                    customer.getLicenseNumber(),
+                    customer.getTcNo()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetCustomerListResponse> getCustomerFromCity(String city) {
+        return customerRepository.getCustomerFromCity(city);
+    }
+
+    @Override
+    public List<GetCustomerListResponse> getCustomersWithSurnameStartingWithLetter(String startLetter) {
+        return customerRepository.getCustomersWithSurnameStartingWithLetter(startLetter);
     }
 }

@@ -1,19 +1,18 @@
-package com.rentacar.rentaacar.services.dtos.concretes;
+package com.rentacar.rentaacar.services.concretes;
 
-import com.rentacar.rentaacar.entities.Insurance;
+import com.rentacar.rentaacar.entities.Customer;
 import com.rentacar.rentaacar.entities.Maintenance;
-import com.rentacar.rentaacar.entities.Payment;
-import com.rentacar.rentaacar.entities.Vehicle;
 import com.rentacar.rentaacar.repositories.MaintenanceRepository;
-import com.rentacar.rentaacar.repositories.VehicleRepository;
-import com.rentacar.rentaacar.services.dtos.abstracts.MaintenanceService;
+import com.rentacar.rentaacar.services.abstracts.MaintenanceService;
 import com.rentacar.rentaacar.services.dtos.requests.Maintenance.AddMaintenanceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Maintenance.UpdateMaintenanceRequest;
+import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Maintenance.GetMaintenanceListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Maintenance.GetMaintenanceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import java.util.List;
 @AllArgsConstructor
 public class MaintenanceManager implements MaintenanceService {
     private final MaintenanceRepository maintenanceRepository;
-    private final VehicleRepository vehicleRepository;
     @Override
     public List<GetMaintenanceListResponse> getAll() {
         List<Maintenance> maintenanceList = maintenanceRepository.findAll();
@@ -58,8 +56,6 @@ public class MaintenanceManager implements MaintenanceService {
     }
     @Override
     public void add(AddMaintenanceRequest addMaintenanceDto) {
-        Vehicle vehicle = vehicleRepository.findById(addMaintenanceDto.getVehicleId())
-                .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir Araç bulunamadı."));
 
         if (addMaintenanceDto.getMaintenanceDate() == null)
             throw new RuntimeException("Bakım tarihi boş olamaz.");
@@ -77,7 +73,6 @@ public class MaintenanceManager implements MaintenanceService {
             throw new RuntimeException("Sonraki bakım tarihi boş olamaz.");
 
         Maintenance addMaintenance = new Maintenance();
-        addMaintenance.setVehicle(vehicle);
         addMaintenance.setMaintenanceDate(addMaintenanceDto.getMaintenanceDate());
         addMaintenance.setMaintenanceType(addMaintenanceDto.getMaintenanceType());
         addMaintenance.setCost(addMaintenanceDto.getCost());
@@ -90,9 +85,6 @@ public class MaintenanceManager implements MaintenanceService {
     public void update(int id, UpdateMaintenanceRequest updateMaintenanceDto) {
         Maintenance updateMaintenance = maintenanceRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("Bu ID ile bir bakım kaydı bulunamadı."));
-
-        Vehicle vehicle = vehicleRepository.findById(updateMaintenanceDto.getVehicleId())
-                .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir Araç bulunamadı."));
 
         if (updateMaintenanceDto.getMaintenanceDate() == null)
             throw new RuntimeException("Güncellenen Bakım tarihi boş olamaz.");
@@ -109,7 +101,6 @@ public class MaintenanceManager implements MaintenanceService {
         if (updateMaintenanceDto.getNextMaintenanceDate() == null)
             throw new RuntimeException("Güncellenen Sonraki bakım tarihi boş olamaz.");
 
-        updateMaintenance.setVehicle(vehicle);
         updateMaintenance.setMaintenanceDate(updateMaintenanceDto.getMaintenanceDate());
         updateMaintenance.setMaintenanceType(updateMaintenanceDto.getMaintenanceType());
         updateMaintenance.setCost(updateMaintenanceDto.getCost());
@@ -130,5 +121,49 @@ public class MaintenanceManager implements MaintenanceService {
         } else {
             throw new RuntimeException("Silme işlemi iptal edildi. Onaylamak için areYouSure bölümüne 'evet' yazmanız gerekiyor.");
         }
+    }
+
+    @Override
+    public List<GetMaintenanceListResponse> findByMaintenanceType(String maintenanceType) {
+        List<Maintenance> maintenances = maintenanceRepository.findByMaintenanceType(maintenanceType);
+        List<GetMaintenanceListResponse> response = new ArrayList<>();
+
+        for (Maintenance maintenance : maintenances) {
+            response.add(new GetMaintenanceListResponse(
+                    maintenance.getMaintenanceDate(),
+                    maintenance.getMaintenanceType(),
+                    maintenance.getCost(),
+                    maintenance.getMechanic(),
+                    maintenance.getNextMaintenanceDate(),
+                    maintenance.getDescription()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetMaintenanceListResponse> findByMechanic(String mechanic) {
+        List<Maintenance> maintenances = maintenanceRepository.findByMechanic(mechanic);
+        List<GetMaintenanceListResponse> response = new ArrayList<>();
+
+        for (Maintenance maintenance : maintenances) {
+            response.add(new GetMaintenanceListResponse(
+                    maintenance.getMaintenanceDate(),
+                    maintenance.getMaintenanceType(),
+                    maintenance.getCost(),
+                    maintenance.getMechanic(),
+                    maintenance.getNextMaintenanceDate(),
+                    maintenance.getDescription()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetMaintenanceListResponse> getUpcomingMaintenances() {
+        return maintenanceRepository.getUpcomingMaintenances();
+    }
+
+    @Override
+    public List<GetMaintenanceListResponse> getMaxCostMaintenance() {
+        return maintenanceRepository.getMaxCostMaintenance();
     }
 }

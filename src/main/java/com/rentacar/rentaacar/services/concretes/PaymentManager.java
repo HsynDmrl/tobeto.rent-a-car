@@ -1,17 +1,20 @@
-package com.rentacar.rentaacar.services.dtos.concretes;
+package com.rentacar.rentaacar.services.concretes;
 
+import com.rentacar.rentaacar.entities.Customer;
 import com.rentacar.rentaacar.entities.Order;
 import com.rentacar.rentaacar.entities.Payment;
 import com.rentacar.rentaacar.repositories.OrderRepository;
 import com.rentacar.rentaacar.repositories.PaymentRepository;
-import com.rentacar.rentaacar.services.dtos.abstracts.PaymentService;
+import com.rentacar.rentaacar.services.abstracts.PaymentService;
 import com.rentacar.rentaacar.services.dtos.requests.Payment.AddPaymentRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Payment.UpdatePaymentRequest;
+import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Payment.GetPaymentListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Payment.GetPaymentResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,5 +144,51 @@ public class PaymentManager implements PaymentService {
         } else {
             throw new RuntimeException("Silme işlemi iptal edildi. Onaylamak için areYouSure bölümüne 'evet' yazmanız gerekiyor.");
         }
+    }
+
+    @Override
+    public List<GetPaymentListResponse> findByAmount(double amount) {
+
+        List<Payment> payments = paymentRepository.findByAmount(amount);
+        List<GetPaymentListResponse> response = new ArrayList<>();
+
+        for (Payment payment : payments) {
+            response.add(new GetPaymentListResponse(
+                    payment.getPaymentDate(),
+                    payment.getPaymentMethod(),
+                    payment.getAmount(),
+                    payment.getCurrency(),
+                    payment.getTransactionNo(),
+                    payment.getStatus()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetPaymentListResponse> findByCurrency(String currency) {
+
+        List<Payment> payments = paymentRepository.findByCurrency(currency);
+        List<GetPaymentListResponse> response = new ArrayList<>();
+
+        for (Payment payment : payments) {
+            response.add(new GetPaymentListResponse(
+                    payment.getPaymentDate(),
+                    payment.getPaymentMethod(),
+                    payment.getAmount(),
+                    payment.getCurrency(),
+                    payment.getTransactionNo(),
+                    payment.getStatus()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetPaymentListResponse> getPaymentsByStatus(int status) {
+        return paymentRepository.getPaymentsByStatus(status);
+    }
+
+    @Override
+    public List<GetPaymentListResponse> getPaymentByTransactionNo(String transactionNo) {
+        return paymentRepository.getPaymentByTransactionNo(transactionNo);
     }
 }

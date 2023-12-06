@@ -1,9 +1,9 @@
 package com.rentacar.rentaacar.controllers;
 
-import com.rentacar.rentaacar.services.dtos.abstracts.MaintenanceService;
-import com.rentacar.rentaacar.services.dtos.abstracts.VehicleService;
+import com.rentacar.rentaacar.services.abstracts.MaintenanceService;
 import com.rentacar.rentaacar.services.dtos.requests.Maintenance.AddMaintenanceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Maintenance.UpdateMaintenanceRequest;
+import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Maintenance.GetMaintenanceListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Maintenance.GetMaintenanceResponse;
 import lombok.AllArgsConstructor;
@@ -36,5 +36,26 @@ public class MaintenancesController {
     public void delete(@PathVariable int id, String areYouSure)
     {
         maintenanceService.delete(id, areYouSure);
+    }
+
+    @GetMapping("/findByMaintenanceType")
+    List<GetMaintenanceListResponse> findByMaintenanceType(String maintenanceType)
+    {
+        return maintenanceService.findByMaintenanceType(maintenanceType);
+    }
+    @GetMapping("/findByMechanic")
+    List<GetMaintenanceListResponse> findByMechanic(String mechanic)
+    {
+        return maintenanceService.findByMechanic(mechanic);
+    }
+
+    @GetMapping("/getUpcomingMaintenances")
+    List<GetMaintenanceListResponse> getUpcomingMaintenances()
+    {
+        return maintenanceService.getUpcomingMaintenances();
+    }
+    @GetMapping("getMaxCostMaintenance")
+    public List<GetMaintenanceListResponse> getMaxCostMaintenance() {
+        return maintenanceService.getMaxCostMaintenance();
     }
 }

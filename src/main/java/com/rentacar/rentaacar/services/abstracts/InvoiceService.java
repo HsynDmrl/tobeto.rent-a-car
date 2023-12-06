@@ -1,4 +1,4 @@
-package com.rentacar.rentaacar.services.dtos.abstracts;
+package com.rentacar.rentaacar.services.abstracts;
 
 import com.rentacar.rentaacar.services.dtos.requests.Invoice.AddInvoiceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Invoice.UpdateInvoiceRequest;

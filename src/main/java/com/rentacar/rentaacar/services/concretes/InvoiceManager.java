@@ -1,10 +1,10 @@
-package com.rentacar.rentaacar.services.dtos.concretes;
+package com.rentacar.rentaacar.services.concretes;
 
 import com.rentacar.rentaacar.entities.*;
 import com.rentacar.rentaacar.repositories.CustomerRepository;
 import com.rentacar.rentaacar.repositories.InvoiceRepository;
 import com.rentacar.rentaacar.repositories.OrderRepository;
-import com.rentacar.rentaacar.services.dtos.abstracts.InvoiceService;
+import com.rentacar.rentaacar.services.abstracts.InvoiceService;
 import com.rentacar.rentaacar.services.dtos.requests.Invoice.AddInvoiceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Invoice.UpdateInvoiceRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Invoice.GetInvoiceListResponse;
@@ -76,10 +76,6 @@ public class InvoiceManager implements InvoiceService {
 
         Invoice addInvoice = new Invoice();
 
-        Order order = orderRepository.findById(addInvoiceDto.getOrderId())
-                .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir sipariş bulunamadı."));
-        addInvoice.setOrder(order);
-
         Customer customer = customerRepository.findById(addInvoiceDto.getCustomerId())
                 .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir müşteri bulunamadı."));
         addInvoice.setCustomer(customer);
@@ -112,10 +108,6 @@ public class InvoiceManager implements InvoiceService {
 
         if (updateInvoiceDto.getStatus().isEmpty())
             throw new RuntimeException("Güncellenen durum boş olamaz.");
-
-        Order order = orderRepository.findById(updateInvoiceDto.getOrderId())
-                .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir sipariş bulunamadı."));
-        updateInvoice.setOrder(order);
 
         Customer customer = customerRepository.findById(updateInvoiceDto.getCustomerId())
                 .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir müşteri bulunamadı."));

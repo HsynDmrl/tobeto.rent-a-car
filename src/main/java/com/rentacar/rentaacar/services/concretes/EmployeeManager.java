@@ -1,13 +1,12 @@
-package com.rentacar.rentaacar.services.dtos.concretes;
+package com.rentacar.rentaacar.services.concretes;
 
+import com.rentacar.rentaacar.entities.Customer;
 import com.rentacar.rentaacar.entities.Employee;
-import com.rentacar.rentaacar.entities.Insurance;
-import com.rentacar.rentaacar.entities.Invoice;
-import com.rentacar.rentaacar.entities.Payment;
 import com.rentacar.rentaacar.repositories.EmployeeRepository;
-import com.rentacar.rentaacar.services.dtos.abstracts.EmployeeService;
+import com.rentacar.rentaacar.services.abstracts.EmployeeService;
 import com.rentacar.rentaacar.services.dtos.requests.Employee.AddEmployeeRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Employee.UpdateEmployeeRequest;
+import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Employee.GetEmployeeListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Employee.GetEmployeeResponse;
 import lombok.AllArgsConstructor;
@@ -161,5 +160,58 @@ public class EmployeeManager implements EmployeeService {
         } else {
             throw new RuntimeException("Silme işlemi iptal edildi. Onaylamak için areYouSure bölümüne 'evet' yazmanız gerekiyor.");
         }
+    }
+
+    @Override
+    public List<GetEmployeeListResponse> findByName(String name) {
+
+        List<Employee> employees = employeeRepository.findByName(name);
+        List<GetEmployeeListResponse> response = new ArrayList<>();
+
+        for (Employee employee : employees) {
+            response.add(new GetEmployeeListResponse(
+                    employee.getName(),
+                    employee.getSurname(),
+                    employee.getTitle(),
+                    employee.getEmail(),
+                    employee.getPhone(),
+                    employee.getHireDate(),
+                    employee.getAddress(),
+                    employee.getCity(),
+                    employee.getSalary(),
+                    employee.getTcNo()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetEmployeeListResponse> findByNameIsNot(String name) {
+        List<Employee> employees = employeeRepository.findByNameIsNot(name);
+        List<GetEmployeeListResponse> response = new ArrayList<>();
+
+        for (Employee employee : employees) {
+            response.add(new GetEmployeeListResponse(
+                    employee.getName(),
+                    employee.getSurname(),
+                    employee.getTitle(),
+                    employee.getEmail(),
+                    employee.getPhone(),
+                    employee.getHireDate(),
+                    employee.getAddress(),
+                    employee.getCity(),
+                    employee.getSalary(),
+                    employee.getTcNo()));
+        }
+        return response;
+    }
+
+    @Override
+    public List<GetEmployeeListResponse> getEmployeesFromCity(String city) {
+        return employeeRepository.getEmployeesFromCity(city);
+    }
+
+    @Override
+    public List<GetEmployeeListResponse> getEmployeesWithSurnameStartingWithLetter(String startLetter) {
+        return employeeRepository.getEmployeesWithSurnameStartingWithLetter(startLetter);
     }
 }

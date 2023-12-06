@@ -1,11 +1,8 @@
-package com.rentacar.rentaacar.services.dtos.concretes;
+package com.rentacar.rentaacar.services.concretes;
 
 import com.rentacar.rentaacar.entities.*;
-import com.rentacar.rentaacar.repositories.CustomerRepository;
-import com.rentacar.rentaacar.repositories.EmployeeRepository;
-import com.rentacar.rentaacar.repositories.OrderRepository;
-import com.rentacar.rentaacar.repositories.VehicleRepository;
-import com.rentacar.rentaacar.services.dtos.abstracts.OrderService;
+import com.rentacar.rentaacar.repositories.*;
+import com.rentacar.rentaacar.services.abstracts.OrderService;
 import com.rentacar.rentaacar.services.dtos.requests.Order.AddOrderRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Order.UpdateOrderRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Order.GetOrderListResponse;
@@ -15,12 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @AllArgsConstructor
 @Service
 public class OrderManager implements OrderService {
     private final OrderRepository orderRepository;
+    private final InvoiceRepository invoiceRepository;
     private final CustomerRepository customerRepository;
     private final VehicleRepository vehicleRepository;
     private final EmployeeRepository employeeRepository;
@@ -79,6 +76,10 @@ public class OrderManager implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir araba bulunamadı."));
         addOrder.setVehicle(vehicle);
 
+
+        Invoice invoice = invoiceRepository.findById(addOrderDto.getInvoiceId())
+                .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir sipariş bulunamadı."));
+        addOrder.setInvoice(invoice);
         addOrder.setDelivered(addOrderDto.isDelivered());
         addOrder.setNotes(addOrderDto.getNotes());
         addOrder.setTotalCost(addOrderDto.getTotalCost());
@@ -112,6 +113,10 @@ public class OrderManager implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir araba bulunamadı."));
         updateOrder.setVehicle(vehicle);
 
+
+        Invoice invoice = invoiceRepository.findById(updateOrderDto.getInvoiceId())
+                .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir sipariş bulunamadı."));
+        updateOrder.setInvoice(invoice);
         updateOrder.setDelivered(updateOrderDto.isDelivered());
         updateOrder.setNotes(updateOrderDto.getNotes());
         updateOrder.setTotalCost(updateOrderDto.getTotalCost());

@@ -1,6 +1,6 @@
 package com.rentacar.rentaacar.controllers;
 
-import com.rentacar.rentaacar.services.dtos.abstracts.VehicleService;
+import com.rentacar.rentaacar.services.abstracts.VehicleService;
 import com.rentacar.rentaacar.services.dtos.requests.Vehicle.AddVehicleRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Vehicle.UpdateVehicleRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Vehicle.GetVehicleListResponse;

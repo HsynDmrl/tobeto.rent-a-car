@@ -25,6 +25,10 @@ public class Order {
     @JoinColumn(name="customer_id")
     private Customer customer;
 
+    @ManyToOne
+    @JoinColumn(name="invoice_id")
+    private Invoice invoice;
+
     @Column(name="pick_up_date", columnDefinition = "date")
     private LocalDate pickUpDate;
 
@@ -52,9 +56,6 @@ public class Order {
     @JsonIgnore
     private List<Payment> payments;
 
-    @OneToMany(mappedBy = "order")
-    @JsonIgnore
-    private List<Invoice> invoices;
 
     @Transient
     private String deleteConfirmation;

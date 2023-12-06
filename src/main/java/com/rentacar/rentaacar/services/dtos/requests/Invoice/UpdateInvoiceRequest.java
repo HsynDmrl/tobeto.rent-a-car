@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateInvoiceRequest {
-    private int orderId;
     private int customerId;
     private LocalDate invoiceDate;
     private LocalDate dueDate;

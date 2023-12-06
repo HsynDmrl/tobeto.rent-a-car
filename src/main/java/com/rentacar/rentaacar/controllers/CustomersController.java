@@ -1,6 +1,6 @@
 package com.rentacar.rentaacar.controllers;
 
-import com.rentacar.rentaacar.services.dtos.abstracts.CustomerService;
+import com.rentacar.rentaacar.services.abstracts.CustomerService;
 import com.rentacar.rentaacar.services.dtos.requests.Customer.AddCustomerRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Customer.UpdateCustomerRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
@@ -35,5 +35,24 @@ public class CustomersController {
     public void delete(@PathVariable int id, String areYouSure)
     {
         customerService.delete(id, areYouSure);
+    }
+
+    @GetMapping("/findByName")
+    public List<GetCustomerListResponse> findByName(String name)
+    {
+        return customerService.findByName(name);
+    }
+    @GetMapping("/findByNameIsNot")
+    public List<GetCustomerListResponse> findByNameIsNot(String name)
+    {
+        return customerService.findByNameIsNot(name);
+    }
+    @GetMapping("/getCustomerFromCity")
+    public List<GetCustomerListResponse> getCustomerFromCity(String city) {
+        return customerService.getCustomerFromCity(city);
+    }
+    @GetMapping("getSurnameStartingWithLetter")
+    public List<GetCustomerListResponse> getCustomersWithSurnameStartingWithLetter(String startLetter) {
+        return customerService.getCustomersWithSurnameStartingWithLetter(startLetter);
     }
 }

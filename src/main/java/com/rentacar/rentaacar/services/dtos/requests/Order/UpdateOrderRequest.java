@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UpdateOrderRequest {
     private int customerId;
+    private int invoiceId;
     private LocalDate pickUpDate;
     private LocalDate dropDate;
     private int vehicleId;
