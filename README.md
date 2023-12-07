@@ -19,6 +19,57 @@ Diagramda görüldüğü gibi, veritabanındaki farklı entity'ler arasında ili
 
 Projede kullanılan ilişkileri daha iyi anlamak için [db_iliskiler.pdf](https://github.com/HsynDmrl/tobeto.rent-a-car/blob/main/db_iliskiler.pdf) adlı bir eğitim dokümanı eklenmiştir. Bu doküman, one-to-many ve one-to-one ilişkilerini açıklamaktadır. İlgili bağlantıya tıklayarak PDF dosyasını görüntüleyebilir veya indirebilirsiniz.
 
+## Güncelleme - 08 Aralık 2023
+
+### Yapılan Değişiklikler
+
+- **Add Request'lerine Validation ve Business Rule Eklendi:** Projede bulunan tüm "add" işlemlerine (örneğin, araç ekleme, müşteri ekleme vb.) validation kontrolleri eklenmiştir. Ayrıca, en az bir business rule örneği de implemente edilmiştir.
+
+#### Örnek Validation Kontrolleri
+
+1. **Araç Ekleme İşlemi İçin:**
+   
+    **VehiclesController:**
+    ```java
+    @PostMapping("/add")
+    public void add(@RequestBody @Valid AddOrderRequest addOrderDto){
+        this.orderService.add(addOrderDto);
+    }
+    ```
+
+    **AddOrderRequest:**
+    ```java
+    @NotNull(message = "Teslim tarihi boş olamaz.")
+    private LocalDate pickUpDate;
+
+    @NotNull(message = "Alım tarihi boş olamaz.")
+    private LocalDate dropDate;
+    ```
+
+2. **Business Rule Kontrolü Örneği:**
+   ```java
+   if (orderRepository.existsByPickUpDateAfterAndDropDateBefore(
+           addOrderDto.getDropDate(),
+           addOrderDto.getPickUpDate())) {
+       throw new RuntimeException("Alım tarihi, teslim tarihinden önce olmalıdır.");
+   }
+
+- **Global Exception Handling Ekledi:** Projeye global exception handling mekanizması eklenmiştir. Bu sayede projede ortaya çıkan `RuntimeException` türündeki hatalar kontrol edilebilmekte ve düzenli bir şekilde yönetilmektedir.
+
+#### Global Exception Handling Örneği
+
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler({RuntimeException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleRuntimeException(RuntimeException exception)
+    {
+        return exception.getMessage();
+    }
+}
+
 ## Güncelleme - 06 Aralık 2023
 
 ### Yapılan Değişiklikler
