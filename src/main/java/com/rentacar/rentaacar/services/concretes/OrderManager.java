@@ -57,11 +57,11 @@ public class OrderManager implements OrderService {
     @Override
     public void add(AddOrderRequest addOrderDto) {
 
-        if (addOrderDto.getPickUpDate().isAfter(addOrderDto.getDropDate()))
-            throw new RuntimeException("Teslim tarihi, Alım tarihinden önce olamaz.");
-
-        if (addOrderDto.getTotalCost() <= 0)
-            throw new RuntimeException("Toplam tutar geçersiz.");
+        if (orderRepository.existsByPickUpDateAfterAndDropDateBefore(
+                addOrderDto.getDropDate(),
+                addOrderDto.getPickUpDate())) {
+            throw new RuntimeException("Alım tarihi, teslim tarihinden önce olmalıdır.");
+        }
 
         Order addOrder = new Order();
 

@@ -5,9 +5,13 @@ import com.rentacar.rentaacar.services.dtos.responses.Maintenance.GetMaintenance
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface MaintenanceRepository extends JpaRepository<Maintenance, Integer> {
+    boolean existsByNextMaintenanceDateBeforeAndMaintenanceDateAfter(LocalDate nextMaintenanceDate, LocalDate maintenanceDate);
+
+
     // Derived Query: Maintenance tipine göre bakımları getir
     List<Maintenance> findByMaintenanceType(String maintenanceType);
 

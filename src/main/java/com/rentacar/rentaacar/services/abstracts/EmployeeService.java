@@ -14,7 +14,7 @@ import java.util.List;
 public interface EmployeeService {
     public List<GetEmployeeListResponse> getAll();
     public GetEmployeeResponse getById(@PathVariable int id);
-    public void add(@RequestBody AddEmployeeRequest addEmployeeDto);
+    public void add(AddEmployeeRequest addEmployeeDto);
     public void update(@PathVariable int id, @RequestBody UpdateEmployeeRequest updateEmployeeDto);
     public void delete(@PathVariable int id, String areYouSure);
     List<GetEmployeeListResponse> findByName(String name);

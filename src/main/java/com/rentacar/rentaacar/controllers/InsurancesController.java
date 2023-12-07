@@ -2,11 +2,13 @@ package com.rentacar.rentaacar.controllers;
 
 import com.rentacar.rentaacar.entities.Insurance;
 import com.rentacar.rentaacar.services.abstracts.InsuranceService;
+import com.rentacar.rentaacar.services.dtos.requests.Customer.AddCustomerRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Insurance.AddInsuranceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Insurance.UpdateInsuranceRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Insurance.GetInsuranceListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Insurance.GetInsuranceResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +28,9 @@ public class InsurancesController {
     public GetInsuranceResponse getById(@PathVariable int id){
         return this.insuranceService.getById(id);
     }
-    @PostMapping
-    public void add(@RequestBody AddInsuranceRequest addInsuranceDto){
-        insuranceService.add(addInsuranceDto);
+    @PostMapping("/add")
+    public void add(@RequestBody @Valid AddInsuranceRequest addInsuranceDto){
+        this.insuranceService.add(addInsuranceDto);
     }
     @PutMapping("{id}")
     public void update(@PathVariable int id, @RequestBody UpdateInsuranceRequest updateInsuranceDto){

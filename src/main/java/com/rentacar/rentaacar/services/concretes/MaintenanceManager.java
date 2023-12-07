@@ -57,20 +57,12 @@ public class MaintenanceManager implements MaintenanceService {
     @Override
     public void add(AddMaintenanceRequest addMaintenanceDto) {
 
-        if (addMaintenanceDto.getMaintenanceDate() == null)
-            throw new RuntimeException("Bakım tarihi boş olamaz.");
+        if (maintenanceRepository.existsByNextMaintenanceDateBeforeAndMaintenanceDateAfter(
+                addMaintenanceDto.getNextMaintenanceDate(),
+                addMaintenanceDto.getMaintenanceDate())) {
+            throw new RuntimeException("Gelecek bakım tarihi, mevcut bakım tarihinden önce olamaz.");
+        }
 
-        if (addMaintenanceDto.getMaintenanceType().length() < 2)
-            throw new RuntimeException("Bakım türü 2 karakterden az olamaz.");
-
-        if (addMaintenanceDto.getCost() <= 0)
-            throw new RuntimeException("Bakımı yapan mekanik veya servis sağlayıcısı boş olamaz.");
-
-        if (addMaintenanceDto.getMechanic().isEmpty())
-            throw new RuntimeException("Mekanik bilgisi boş olamaz.");
-
-        if (addMaintenanceDto.getNextMaintenanceDate() == null)
-            throw new RuntimeException("Sonraki bakım tarihi boş olamaz.");
 
         Maintenance addMaintenance = new Maintenance();
         addMaintenance.setMaintenanceDate(addMaintenanceDto.getMaintenanceDate());

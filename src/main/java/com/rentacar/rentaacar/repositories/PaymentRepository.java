@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 
+    boolean existsByTransactionNo(String transactionNo);
+
     // 2x Derived (Örnek)
     List<Payment> findByAmount(double amount);
     List<Payment> findByCurrency(String currency);

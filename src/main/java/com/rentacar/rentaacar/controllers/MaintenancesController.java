@@ -1,11 +1,13 @@
 package com.rentacar.rentaacar.controllers;
 
 import com.rentacar.rentaacar.services.abstracts.MaintenanceService;
+import com.rentacar.rentaacar.services.dtos.requests.Invoice.AddInvoiceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Maintenance.AddMaintenanceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Maintenance.UpdateMaintenanceRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Maintenance.GetMaintenanceListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Maintenance.GetMaintenanceResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +26,9 @@ public class MaintenancesController {
     public GetMaintenanceResponse getById(@PathVariable int id){
         return this.maintenanceService.getById(id);
     }
-    @PostMapping
-    public void add(@RequestBody AddMaintenanceRequest addMaintenanceDto){
-        maintenanceService.add(addMaintenanceDto);
+    @PostMapping("/add")
+    public void add(@RequestBody @Valid AddMaintenanceRequest addMaintenanceDto){
+        this.maintenanceService.add(addMaintenanceDto);
     }
     @PutMapping("{id}")
     public void update(@PathVariable int id, @RequestBody UpdateMaintenanceRequest updateMaintenanceDto){
@@ -48,7 +50,6 @@ public class MaintenancesController {
     {
         return maintenanceService.findByMechanic(mechanic);
     }
-
     @GetMapping("/getUpcomingMaintenances")
     List<GetMaintenanceListResponse> getUpcomingMaintenances()
     {

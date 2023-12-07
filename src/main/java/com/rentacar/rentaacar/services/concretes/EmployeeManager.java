@@ -10,6 +10,7 @@ import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListRe
 import com.rentacar.rentaacar.services.dtos.responses.Employee.GetEmployeeListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Employee.GetEmployeeResponse;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -64,32 +65,12 @@ public class EmployeeManager implements EmployeeService {
     }
     @Override
     public void add(AddEmployeeRequest addEmployeeDto) {
-        if (addEmployeeDto.getName().length() < 2)
-            throw new RuntimeException("Ad 2 karakterden kısa olamaz.");
 
-        if (addEmployeeDto.getSurname().length() < 2)
-            throw new RuntimeException("Soyad 2 karakterden kısa olamaz.");
+        if(employeeRepository.existsByTcNo(addEmployeeDto.getTcNo().trim()))
+            throw new RuntimeException("TC Numarası kaydı daha önceden bulunuyor, farklı TC numarası giriniz.");
 
-        if (addEmployeeDto.getTitle().length() < 3)
-            throw new RuntimeException("Ünvan 3 karakterden kısa olamaz.");
-
-        if (addEmployeeDto.getEmail().length() < 4)
-            throw new RuntimeException("E-Posta Adresi 4 karakterden kısa olamaz.");
-
-        if (addEmployeeDto.getPhone().length() < 11)
-            throw new RuntimeException("Telefon Numarası 11 karakterden kısa olamaz.");
-
-        if (addEmployeeDto.getAddress().length() < 10)
-            throw new RuntimeException("Adres 10 karakterden kısa olamaz.");
-
-        if (addEmployeeDto.getCity().length() < 3)
-            throw new RuntimeException("Şehir 3 karakterden kısa olamaz.");
-
-        if (addEmployeeDto.getSalary() <= 0)
-            throw new RuntimeException("Maaş 0 olamaz.");
-
-        if (addEmployeeDto.getTcNo().length() != 11)
-            throw new RuntimeException("TC Kimlik Numarası 11 haneli olmalıdır.");
+        if(employeeRepository.existsByEmail(addEmployeeDto.getEmail().trim()))
+            throw new RuntimeException("Email kaydı daha önceden bulunuyor, farklı email adresi giriniz.");
 
         Employee addEmployee = new Employee();
         addEmployee.setName(addEmployeeDto.getName());

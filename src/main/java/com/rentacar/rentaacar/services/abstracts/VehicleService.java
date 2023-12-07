@@ -12,7 +12,7 @@ import java.util.List;
 public interface VehicleService {
     public List<GetVehicleListResponse> getAll();
     public GetVehicleResponse getById(@PathVariable int id);
-    public void add(@RequestBody AddVehicleRequest addVehicleDto);
+    public void add(AddVehicleRequest addVehicleDto);
     public void update(@PathVariable int id, @RequestBody UpdateVehicleRequest updateVehicleDto);
     public void delete(@PathVariable int id, String areYouSure);
 }

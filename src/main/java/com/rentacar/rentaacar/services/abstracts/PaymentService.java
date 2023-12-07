@@ -14,7 +14,7 @@ import java.util.List;
 public interface PaymentService {
     public List<GetPaymentListResponse> getAll();
     public GetPaymentResponse getById(@PathVariable int id);
-    public void add(@RequestBody AddPaymentRequest addPaymentDto);
+    public void add(AddPaymentRequest addPaymentDto);
     public void update(@PathVariable int id, @RequestBody UpdatePaymentRequest updatePaymentDto);
     public void delete(@PathVariable int id, String areYouSure);
     List<GetPaymentListResponse> findByAmount(double amount);

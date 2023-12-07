@@ -1,11 +1,13 @@
 package com.rentacar.rentaacar.controllers;
 
 import com.rentacar.rentaacar.services.abstracts.PaymentService;
+import com.rentacar.rentaacar.services.dtos.requests.Maintenance.AddMaintenanceRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Payment.AddPaymentRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Payment.UpdatePaymentRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Payment.GetPaymentListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Payment.GetPaymentResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +26,9 @@ public class PaymentsController {
     public GetPaymentResponse getById(@PathVariable int id){
         return this.paymentService.getById(id);
     }
-    @PostMapping
-    public void add(@RequestBody AddPaymentRequest addPaymentDto) {
-        paymentService.add(addPaymentDto);
+    @PostMapping("/add")
+    public void add(@RequestBody @Valid AddPaymentRequest addPaymentDto) {
+       this.paymentService.add(addPaymentDto);
     }
     @PutMapping("{id}")
     public void update(@PathVariable int id, @RequestBody UpdatePaymentRequest updatePaymentDto){

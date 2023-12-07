@@ -13,7 +13,7 @@ import java.util.List;
 public interface CustomerService {
     public List<GetCustomerListResponse> getAll();
     public GetCustomerResponse getById(@PathVariable int id);
-    public void add(@RequestBody AddCustomerRequest addCustomerDto);
+    public void add(AddCustomerRequest addCustomerDto);
     public void update(@PathVariable int id, @RequestBody UpdateCustomerRequest updateCustomerDto);
     public void delete(@PathVariable int id, String areYouSure);
 

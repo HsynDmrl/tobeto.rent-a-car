@@ -59,20 +59,9 @@ public class InvoiceManager implements InvoiceService {
     @Override
     public void add(AddInvoiceRequest addInvoiceDto) {
 
-        if (addInvoiceDto.getInvoiceDate() == null)
-            throw new RuntimeException("Fatura tarihi boş olamaz.");
-
-        if (addInvoiceDto.getDueDate() == null)
-            throw new RuntimeException("Son ödeme tarihi boş olamaz.");
-
-        if (addInvoiceDto.getTotalAmount() <= 0.0)
-            throw new RuntimeException("Toplam miktar boş veya sıfır olamaz.");
-
-        if (addInvoiceDto.getCurrency().isEmpty())
-            throw new RuntimeException("Para birimi boş olamaz.");
-
-        if (addInvoiceDto.getStatus().isEmpty())
-            throw new RuntimeException("Durum boş olamaz.");
+        if (invoiceRepository.existsByCustomerId(addInvoiceDto.getCustomerId())) {
+            throw new RuntimeException("Müşteriye ait fatura kaydı daha önceden bulunuyor.");
+        }
 
         Invoice addInvoice = new Invoice();
 

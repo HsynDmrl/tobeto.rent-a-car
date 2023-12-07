@@ -60,23 +60,8 @@ public class InsuranceManager implements InsuranceService {
     @Override
     public void add(AddInsuranceRequest addInsuranceDto) {
 
-        if (addInsuranceDto.getVehicleId() <= 0)
-            throw new RuntimeException("Araç ID geçersiz.");
-
-        if (addInsuranceDto.getInsuranceCompany().length() < 2)
-            throw new RuntimeException("Sigorta şirketi şirketi 2 karakterden kısa olamaz.");
-
-        if (addInsuranceDto.getPolicyNumber().length() < 2)
-            throw new RuntimeException("Poliçe numarası 2 karakterden kısa olamaz.");
-
-        if (addInsuranceDto.getExpirationDate() == null || addInsuranceDto.getExpirationDate().trim().isEmpty())
-            throw new RuntimeException("Son kullanma tarihi boş olamaz.");
-
-        if (addInsuranceDto.getCoverageType().length() < 2)
-            throw new RuntimeException("Kapsam türü 2 karakterden kısa olamaz.");
-
-        if (addInsuranceDto.getPremiumAmount() == null )
-            throw new RuntimeException("Prim miktarı boş veya sıfır olamaz.");
+        if(insuranceRepository.existsBypolicyNumber(addInsuranceDto.getPolicyNumber().trim()))
+            throw new RuntimeException("Poliçe Numarası kaydı daha önceden bulunuyor, farklı Poliçe numarası giriniz.");
 
         Insurance addInsurance = new Insurance();
 

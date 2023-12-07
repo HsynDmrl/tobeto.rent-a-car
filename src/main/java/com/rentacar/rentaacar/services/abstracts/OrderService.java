@@ -12,7 +12,7 @@ import java.util.List;
 public interface OrderService {
     public List<GetOrderListResponse> getAll();
     public GetOrderResponse getById(@PathVariable int id);
-    public void add(@RequestBody AddOrderRequest addOrderDto);
+    public void add(AddOrderRequest addOrderDto);
     public void update(@PathVariable int id, @RequestBody UpdateOrderRequest updateOrderDto);
     public void delete(@PathVariable int id, String areYouSure);
 }

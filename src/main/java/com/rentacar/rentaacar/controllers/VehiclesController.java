@@ -5,6 +5,7 @@ import com.rentacar.rentaacar.services.dtos.requests.Vehicle.AddVehicleRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Vehicle.UpdateVehicleRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Vehicle.GetVehicleListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Vehicle.GetVehicleResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +24,9 @@ public class VehiclesController {
     public GetVehicleResponse getById(@PathVariable int id){
         return this.vehicleService.getById(id);
     }
-    @PostMapping
-    public void add(@RequestBody AddVehicleRequest addVehicleDto){
-        vehicleService.add(addVehicleDto);
+    @PostMapping("/add")
+    public void add(@RequestBody @Valid AddVehicleRequest addVehicleDto){
+        this.vehicleService.add(addVehicleDto);
     }
     @PutMapping("{id}")
     public void update(@PathVariable int id, @RequestBody UpdateVehicleRequest updateVehicleDto){

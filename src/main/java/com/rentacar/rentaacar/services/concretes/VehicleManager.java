@@ -67,33 +67,9 @@ public class VehicleManager implements VehicleService {
     @Override
     public void add(AddVehicleRequest addVehicleDto) {
 
-        if (addVehicleDto.getBrand().length() < 2)
-            throw new RuntimeException("Marka bilgisi 2 karakterden kısa olamaz.");
-
-        if (addVehicleDto.getModel().length() < 2)
-            throw new RuntimeException("Model bilgisi 2 karakterden kısa olamaz.");
-
-        if (Integer.toString(addVehicleDto.getYear()).length() != 4) {
-            throw new RuntimeException("Yıl bilgisi geçersiz. Lütfen geçerli bir yıl giriniz.");
+        if (vehicleRepository.existsByPlateNumber(addVehicleDto.getPlateNumber().trim())) {
+            throw new RuntimeException("Araç plaka numarası kaydı daha önceden bulunuyor, lütfen farklı bir plaka numarası giriniz.");
         }
-
-        if (addVehicleDto.getColor().length() < 2)
-            throw new RuntimeException("Renk bilgisi geçersiz. En az 2 karakterden oluşmalıdır.");
-
-        if (addVehicleDto.getDailyCost() <= 0)
-            throw new RuntimeException("Günlük kira bedeli geçersiz.");
-
-        if (addVehicleDto.getStatus().isEmpty())
-            throw new RuntimeException("Durum bilgisi boş olamaz");
-
-        if (addVehicleDto.getPlateNumber() == null || addVehicleDto.getPlateNumber().length() > 8)
-            throw new RuntimeException("Plaka numarası boş olamaz ve en fazla 7 karakterden uzun olamaz.");
-
-        if (addVehicleDto.getOdometer() <= 0)
-            throw new RuntimeException("Araç kilometre bilgisi geçerli değil.");
-
-        if (addVehicleDto.getFuelType().isEmpty())
-            throw new RuntimeException("Yakıt türü bilgisi geçerli değil.");
 
         Vehicle addVehicle = new Vehicle();
         addVehicle.setBrand(addVehicleDto.getBrand());

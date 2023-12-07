@@ -60,29 +60,10 @@ public class PaymentManager implements PaymentService {
     @Override
     public void add(AddPaymentRequest addPaymentDto) {
 
-        Order order = orderRepository.findById(addPaymentDto.getOrderId())
-                .orElseThrow(() -> new RuntimeException("Bu ID ile kayıtlı bir sipariş bulunamadı."));
-
-        if (order.getDropDate().isAfter(addPaymentDto.getPaymentDate()))
-            throw new RuntimeException("Bu ID ile kayıtlı siparişin teslim alma tarihi, ödeme tarihinden önce olamaz.");
-
-        if (addPaymentDto.getPaymentMethod().isEmpty())
-            throw new RuntimeException("Ödeme yöntemi geçerli değil.");
-
-        if (addPaymentDto.getAmount() <= 0.0)
-            throw new RuntimeException("Ödeme tutarı geçerli değil.");
-
-        if (addPaymentDto.getCurrency().isEmpty())
-            throw new RuntimeException("Ödeme para birimi geçerli değil.");
-
-        if (addPaymentDto.getTransactionNo().isEmpty())
-            throw new RuntimeException("Ödeme işlem numarası geçerli değil.");
-
-        if (addPaymentDto.getStatus() != 1 && addPaymentDto.getStatus() != 0)
-            throw new RuntimeException("Ödeme durumu geçerli değil. Geçerli değerler: 0 (Onaysız) veya 1 (Onaylı).");
+        if (paymentRepository.existsByTransactionNo(addPaymentDto.getTransactionNo().trim()))
+            throw new RuntimeException("Bu işlem numarasıyla daha önce bir ödeme kaydı yapılmıştır. Lütfen farklı bir işlem numarası giriniz.");
 
         Payment addPayment = new Payment();
-        addPayment.setOrder(order);
 
         addPayment.setPaymentDate(addPaymentDto.getPaymentDate());
         addPayment.setPaymentMethod(addPaymentDto.getPaymentMethod());

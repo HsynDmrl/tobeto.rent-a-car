@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface InsuranceRepository extends JpaRepository<Insurance, Integer> {
 
+    boolean existsBypolicyNumber(String policyNumber);
 
     // Derived sorgu 1: Sigorta şirketi ismi verilen sigortaları getir
     List<Insurance> findByInsuranceCompany(String insuranceCompany);

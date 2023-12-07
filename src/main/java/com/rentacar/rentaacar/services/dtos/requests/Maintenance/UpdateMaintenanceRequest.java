@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateMaintenanceRequest {
-    private int vehicleId;
     private LocalDate maintenanceDate;
     private String maintenanceType;
     private Double cost;

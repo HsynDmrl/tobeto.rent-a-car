@@ -57,29 +57,11 @@ public class CustomerManager implements CustomerService {
     }
     @Override
     public void add(AddCustomerRequest addCustomerDto) {
-        if (addCustomerDto.getName().length() < 2)
-            throw new RuntimeException("Ad 2 karakterden kısa olamaz.");
 
-        if (addCustomerDto.getSurname().length() < 2)
-            throw new RuntimeException("Soyad 2 karakterden kısa olamaz.");
-
-        if (addCustomerDto.getAddress().length() < 10)
-            throw new RuntimeException("Adres 10 karakterden kısa olamaz.");
-
-        if (addCustomerDto.getCity().length() < 3)
-            throw new RuntimeException("Şehir 3 karakterden kısa olamaz.");
-
-        if (addCustomerDto.getPhone().length() < 11)
-            throw new RuntimeException("Telefon Numarası 11 karakterden kısa olamaz.");
-
-        if (addCustomerDto.getEmail().length() < 4)
-            throw new RuntimeException("E-Posta Adresi 4 karakterden kısa olamaz.");
-
-        if (addCustomerDto.getLicenseNumber().length() < 6)
-            throw new RuntimeException("Ehliyet numarası 6 karakterden kısa olamaz.");
-
-        if (addCustomerDto.getTcNo().length() != 11)
-            throw new RuntimeException("TC Kimlik Numarası 11 haneli olmalıdır.");
+        if(customerRepository.existsByTcNo(addCustomerDto.getTcNo().trim()))
+            throw new RuntimeException("TC Numarası kaydı daha önceden bulunuyor, farklı TC numarası giriniz.");
+        if(customerRepository.existsByEmail(addCustomerDto.getEmail().trim()))
+            throw new RuntimeException("Email kaydı daha önceden bulunuyor, farklı email adresi giriniz.");
 
         Customer addCustomer = new Customer();
         addCustomer.setName(addCustomerDto.getName());

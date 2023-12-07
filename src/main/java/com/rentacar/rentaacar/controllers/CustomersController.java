@@ -5,6 +5,7 @@ import com.rentacar.rentaacar.services.dtos.requests.Customer.AddCustomerRequest
 import com.rentacar.rentaacar.services.dtos.requests.Customer.UpdateCustomerRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Customer.GetCustomerResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +24,10 @@ public class CustomersController {
     public GetCustomerResponse getById(@PathVariable int id){
         return this.customerService.getById(id);
     }
-    @PostMapping
-    public void add(@RequestBody AddCustomerRequest addCustomerDto){
-        customerService.add(addCustomerDto);
+
+    @PostMapping("/add")
+    public void add(@RequestBody @Valid AddCustomerRequest addCustomerDto){
+        this.customerService.add(addCustomerDto);
     }
     @PutMapping("{id}")
     public void update(@PathVariable int id, @RequestBody UpdateCustomerRequest updateCustomerDto){

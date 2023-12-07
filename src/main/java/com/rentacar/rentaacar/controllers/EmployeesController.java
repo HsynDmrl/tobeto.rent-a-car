@@ -1,11 +1,13 @@
 package com.rentacar.rentaacar.controllers;
 
 import com.rentacar.rentaacar.services.abstracts.EmployeeService;
+import com.rentacar.rentaacar.services.dtos.requests.Customer.AddCustomerRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Employee.AddEmployeeRequest;
 import com.rentacar.rentaacar.services.dtos.requests.Employee.UpdateEmployeeRequest;
 import com.rentacar.rentaacar.services.dtos.responses.Employee.GetEmployeeListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Employee.GetEmployeeListResponse;
 import com.rentacar.rentaacar.services.dtos.responses.Employee.GetEmployeeResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +26,9 @@ public class EmployeesController {
     public GetEmployeeResponse getById(@PathVariable int id){
         return this.employeeService.getById(id);
     }
-    @PostMapping
-    public void add(@RequestBody AddEmployeeRequest addEmployeeDto){
-        employeeService.add(addEmployeeDto);
+    @PostMapping("/add")
+    public void add(@RequestBody @Valid AddEmployeeRequest addEmployeeDto){
+        this.employeeService.add(addEmployeeDto);
     }
     @PutMapping("{id}")
     public void update(@PathVariable int id, @RequestBody UpdateEmployeeRequest updateEmployeeDto){
